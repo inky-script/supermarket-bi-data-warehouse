@@ -1,0 +1,7 @@
+SELECT TOP (1000) [Day]
+      ,[Month]
+      ,[Year]
+      ,[Quarter]
+      ,[Date]
+      ,[DateKey]
+  FROM [Stage_SuperMarket].[dbo].[DimDate]

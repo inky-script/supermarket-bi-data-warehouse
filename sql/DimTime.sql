@@ -1,0 +1,6 @@
+SELECT TOP (1000) [HourNum]
+      ,[MinuteNum]
+      ,[TimePeriod]
+      ,[Time]
+      ,[TimeKey]
+  FROM [Stage_SuperMarket].[dbo].[DimTime]

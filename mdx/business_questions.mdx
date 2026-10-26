@@ -1,0 +1,180 @@
+-- =====================================================
+-- CAU 1
+-- PHAN TICH HIEU SUAT DOANH THU THEO THANH PHO VA CHI NHANH
+SELECT
+[Measures].[Sales] ON 0,
+
+[Dim Branch].[Branch Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+-- =====================================================
+-- CAU 2
+-- DANH GIA HIEU SUAT CAC DONG SAN PHAM
+
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[Quantity],
+    [Measures].[gross income]
+} ON 0,
+
+[Dim Product].[Product Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+
+
+
+
+-- =====================================================
+-- CAU 3
+-- PHAN TICH PHAN KHUC KHACH HANG
+
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[Quantity]
+} ON 0,
+
+[Dim Customer].[Customer Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+
+
+
+
+-- =====================================================
+-- CAU 4
+-- XU HUONG DOANH THU THEO THOI GIAN
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[gross income]
+} ON 0,
+
+[Dim Date].[Date Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+
+
+
+-- =====================================================
+-- CAU 5
+-- PHAN TICH PHUONG THUC THANH TOAN VA GIA TRI GIAO DICH
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[Tax 5%]
+} ON 0,
+
+[Dim Payment].[Payment Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+
+
+
+-- =====================================================
+-- GIA TRI GIAO DICH TRUNG BINH
+-- =====================================================
+
+WITH 
+MEMBER [Measures].[AvgTransaction]
+AS 
+[Measures].[Sales] / [Measures].[Quantity]
+
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[AvgTransaction]
+} ON 0,
+
+[Dim Payment].[Payment Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+
+
+
+-- =====================================================
+-- SALES + PROFIT
+-- =====================================================
+
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[gross income]
+} ON 0,
+
+[Dim Product].[Product Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+
+
+
+-- =====================================================
+-- SALES + QUANTITY
+-- =====================================================
+
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[Quantity]
+} ON 0,
+
+[Dim Product].[Product Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+
+
+
+-- =====================================================
+-- SALES + TAX
+-- =====================================================
+
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[Tax 5%]
+} ON 0,
+
+[Dim Branch].[Branch Key].MEMBERS ON 1
+
+FROM [Stage Super Market]
+
+
+
+-- =====================================================
+-- XEP HANG GIAM DAN
+-- =====================================================
+
+SELECT 
+ORDER
+(
+    [Dim Product].[Product Key].MEMBERS,
+    [Measures].[Sales],
+    BDESC
+) ON 1,
+
+[Measures].[Sales] ON 0
+
+FROM [Stage Super Market]
+
+
+
+-- =====================================================
+-- FULL PHAN TICH
+-- =====================================================
+
+SELECT 
+{
+    [Measures].[Sales],
+    [Measures].[Quantity],
+    [Measures].[gross income]
+} ON 0,
+
+NON EMPTY
+(
+    [Dim Branch].[Branch Key].MEMBERS
+    *
+    [Dim Product].[Product Key].MEMBERS
+) ON 1
+
+FROM [Stage Super Market]
